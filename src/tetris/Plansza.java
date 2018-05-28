@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.Random;
 
 @SuppressWarnings("serial")
-public class Plansza extends Label implements ActionListener {
+public class Plansza extends Label {
 
     final static short SZE = Klocki.SIZE * 10;
     final static short WYS = Klocki.SIZE * 20;
@@ -29,7 +29,6 @@ public class Plansza extends Label implements ActionListener {
 
     Plansza() {
         super(SZE, WYS);
-        addMouseListener(new MAdapter());
         addKeyListener(new TAdapter());
         sKlocek = new Sound("klocek.wav");
         sObrot = new Sound("obrot.wav");
@@ -89,6 +88,7 @@ public class Plansza extends Label implements ActionListener {
         }
     }
 
+    @SuppressWarnings("serial")
     public void nowyKlocek() {
         sKlocek.play();
         klocekX = 4;
@@ -96,7 +96,7 @@ public class Plansza extends Label implements ActionListener {
         speedMax = (short) (20 - Tetris.poziom);
         if (speedMax < 0) speedMax = 0;
         klocek.setKlocek(Tetris.next.klocek);
-//        Tetris.next.losujKlocek();
+        Tetris.next.losujKlocek();
         Tetris.punkty += klocek.akKlocek;
         Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
     }
@@ -216,49 +216,29 @@ public class Plansza extends Label implements ActionListener {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-    class MAdapter extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (!gamePlay) {
-                gamePlay = true;
-                Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
-                Tetris.lLinie.setText(String.valueOf(Tetris.linie));
-                Tetris.lPoziom.setText(String.valueOf(Tetris.poziom));
-            } else
-                pause = !pause;
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-        }
-    }
-
     class TAdapter extends KeyAdapter {
 
         @Override
         public void keyPressed(KeyEvent e) {
             int k = e.getKeyCode();
-            if (k == e.VK_UP) kUp = true;
-            if (k == e.VK_DOWN) kDown = true;
-            if (k == e.VK_LEFT) kLeft = true;
-            if (k == e.VK_RIGHT) kRight = true;
+            System.out.println(k);
+
+            if (!gamePlay) {
+                gamePlay = true;
+                Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
+                Tetris.lLinie.setText(String.valueOf(Tetris.linie));
+                Tetris.lPoziom.setText(String.valueOf(Tetris.poziom));
+            } else if (k == e.VK_P) {
+                pause = !pause;
+            } else if (k == e.VK_UP) {
+                kUp = true;
+            } else if (k == e.VK_DOWN) {
+                kDown = true;
+            } else if (k == e.VK_LEFT) {
+                kLeft = true;
+            } else if (k == e.VK_RIGHT) {
+                kRight = true;
+            }
         }
 
         @Override
@@ -268,9 +248,6 @@ public class Plansza extends Label implements ActionListener {
             if (k == e.VK_DOWN) kDown = false;
             if (k == e.VK_LEFT) kLeft = false;
             if (k == e.VK_RIGHT) kRight = false;
-
         }
-
-
     }
 }

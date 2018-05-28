@@ -9,7 +9,7 @@ public class Sound {
     private AudioClip clip;
 
     Sound(String nazwaPliku) {
-        clip = Applet.newAudioClip(getClass().getResource("/resources/"+nazwaPliku));
+        clip = Applet.newAudioClip(getClass().getResource("/resources/" + nazwaPliku));
     }
 
     public void play() {
@@ -19,15 +19,5 @@ public class Sound {
                 clip.play();
             }
         }.start();
-    }
-
-    public void stop() {
-        isPlay = false;
-        clip.stop();
-    }
-
-    public void petla() {
-        isPlay = true;
-        clip.loop();
     }
 }

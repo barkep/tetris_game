@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 @SuppressWarnings("serial")
 public abstract class Label extends Canvas {
 
-    protected byte klocek;
     BufferedImage image;
     Graphics2D grafika;
 
@@ -30,5 +29,4 @@ public abstract class Label extends Canvas {
         drawImage();
         naEkran();
     }
-
 }

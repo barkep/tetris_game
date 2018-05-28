@@ -3,13 +3,14 @@ package tetris;
 import java.awt.Color;
 import java.util.Random;
 
-public class Next extends Plansza{
+@SuppressWarnings("serial")
+public class Next extends Label {
 
     byte klocek;
     private Random los = new Random();
 
     Next() {
-        super();
+        super((byte) 100, (byte) 100);
         losujKlocek();
     }
 

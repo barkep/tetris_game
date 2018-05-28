@@ -14,8 +14,8 @@ public class Tetris extends JPanel implements Runnable {
     static JFrame okno = new JFrame("Tetris");
     static Thread watek = new Thread(tetris);
 
-    static Label plansza = new Plansza();
-    static Label next = new Next();
+    static Plansza plansza = new Plansza();
+    static Next next = new Next();
 
     boolean start = false;
     short op = 30;
