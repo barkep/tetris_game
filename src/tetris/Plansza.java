@@ -2,14 +2,11 @@ package tetris;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.Random;
 
 @SuppressWarnings("serial")
-public class Plansza extends Label implements MouseListener, KeyListener {
+public class Plansza extends Label implements ActionListener {
 
     final static short SZE = Klocki.SIZE * 10;
     final static short WYS = Klocki.SIZE * 20;
@@ -32,8 +29,8 @@ public class Plansza extends Label implements MouseListener, KeyListener {
 
     Plansza() {
         super(SZE, WYS);
-        addMouseListener(this);
-        addKeyListener(this);
+        addMouseListener(new MAdapter());
+        addKeyListener(new TAdapter());
         sKlocek = new Sound("klocek.wav");
         sObrot = new Sound("obrot.wav");
         sPasek = new Sound("pasek.wav");
@@ -99,7 +96,7 @@ public class Plansza extends Label implements MouseListener, KeyListener {
         speedMax = (short) (20 - Tetris.poziom);
         if (speedMax < 0) speedMax = 0;
         klocek.setKlocek(Tetris.next.klocek);
-        Tetris.next.losujKlocek();
+//        Tetris.next.losujKlocek();
         Tetris.punkty += klocek.akKlocek;
         Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
     }
@@ -185,55 +182,6 @@ public class Plansza extends Label implements MouseListener, KeyListener {
                 if (klocek.tab[tx][ty]) drukKostka((byte) (tx + x), (byte) (ty + y), (byte) (klocek.akKlocek + 1));
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (!gamePlay) {
-            gamePlay = true;
-            Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
-            Tetris.lLinie.setText(String.valueOf(Tetris.linie));
-            Tetris.lPoziom.setText(String.valueOf(Tetris.poziom));
-        } else
-            pause = !pause;
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @SuppressWarnings("static-access")
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int k = e.getKeyCode();
-        if (k == e.VK_UP) kUp = true;
-        if (k == e.VK_DOWN) kDown = true;
-        if (k == e.VK_LEFT) kLeft = true;
-        if (k == e.VK_RIGHT) kRight = true;
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        int k = e.getKeyCode();
-        if (k == e.VK_UP) kUp = false;
-        if (k == e.VK_DOWN) kDown = false;
-        if (k == e.VK_LEFT) kLeft = false;
-        if (k == e.VK_RIGHT) kRight = false;
-    }
 
     private boolean isKlocekPlansza(byte x, byte y) {
         for (byte xx = 0; xx < 4; xx++)
@@ -266,5 +214,63 @@ public class Plansza extends Label implements MouseListener, KeyListener {
             Tetris.punkty += 5;
             Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    class MAdapter extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (!gamePlay) {
+                gamePlay = true;
+                Tetris.lPunkty.setText(String.valueOf(Tetris.punkty));
+                Tetris.lLinie.setText(String.valueOf(Tetris.linie));
+                Tetris.lPoziom.setText(String.valueOf(Tetris.poziom));
+            } else
+                pause = !pause;
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+    }
+
+    class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int k = e.getKeyCode();
+            if (k == e.VK_UP) kUp = true;
+            if (k == e.VK_DOWN) kDown = true;
+            if (k == e.VK_LEFT) kLeft = true;
+            if (k == e.VK_RIGHT) kRight = true;
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            int k = e.getKeyCode();
+            if (k == e.VK_UP) kUp = false;
+            if (k == e.VK_DOWN) kDown = false;
+            if (k == e.VK_LEFT) kLeft = false;
+            if (k == e.VK_RIGHT) kRight = false;
+
+        }
+
+
     }
 }

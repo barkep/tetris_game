@@ -1,14 +1,13 @@
 package tetris;
 
 import javax.swing.*;
-import java.awt.Canvas;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @SuppressWarnings("serial")
 public abstract class Label extends Canvas {
 
+    protected byte klocek;
     BufferedImage image;
     Graphics2D grafika;
 

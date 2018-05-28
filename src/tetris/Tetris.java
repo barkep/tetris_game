@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class Tetris extends JPanel implements Runnable {
 
 
@@ -15,8 +14,8 @@ public class Tetris extends JPanel implements Runnable {
     static JFrame okno = new JFrame("Tetris");
     static Thread watek = new Thread(tetris);
 
-    static Plansza plansza = new Plansza();
-    static Next next = new Next();
+    static Label plansza = new Plansza();
+    static Label next = new Next();
 
     boolean start = false;
     short op = 30;
@@ -86,7 +85,6 @@ public class Tetris extends JPanel implements Runnable {
         watek.start();
     }
 
-    @SuppressWarnings("static-access")
     @Override
     public void run() {
         long wait, startCzas, cyklCzas;
